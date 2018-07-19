@@ -17,13 +17,13 @@ using std::getline;
 void func(const string &ifile, vector<string> &vec) {
 	ifstream in(ifile);
 	if (in) {
-		string line;
-		while (getline(in, line))
+		string word;
+		while (in >> word)
 		{
-			vec.push_back(line);
+			vec.push_back(word);
 		}
 	}
-	
+
 }
 
 int main() {
