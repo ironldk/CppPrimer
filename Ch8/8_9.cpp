@@ -1,17 +1,19 @@
 #include "stdafx.h"
 #include<iostream>
+#include<sstream>
+#include<fstream>
 #include<string>
-using std::istream;
-using std::cin;
+using std::istringstream;
 using std::cout;
 using std::endl;
 using std::string;
 // using namespace std;
 
-istream & func(istream &i);
+istringstream & func(istringstream &);
 
 int main() {
-	func(cin);
+	istringstream in("Hello World!");
+	func(in);
 	return 0;
 }
 
@@ -29,7 +31,7 @@ int main() {
 //}
 
 
-istream& func(istream &is)
+istringstream& func(istringstream &is)
 {
 	std::string buf;
 	while (is >> buf)
