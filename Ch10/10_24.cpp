@@ -1,6 +1,6 @@
-//exercise 10.24: use bind and check_size to find the first element in a
-//vector of ints that has a value greater than the length of a specified
-//string value.
+//Exercise 10.25: In the exercises for ¡ì 10.3.2 (p. 392) you wrote a version
+//of biggies that uses partition.Rewrite that function to use
+//check_size and bind
 #include"stdafx.h"
 #include<iostream>
 #include<algorithm>
