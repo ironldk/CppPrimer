@@ -6,10 +6,11 @@ using std::string;
 class TreeNode {
 public:
 	TreeNode();
-	TreeNode()
+	TreeNode(const TreeNode &rhs):
+		value(rhs.value), count(rhs.count), left(rhs.left), right(right) { ++*count; }
 private:
 	std::string value;
-	int count;
+	int *count;
 	TreeNode *left;
 	TreeNode *right;
 };
