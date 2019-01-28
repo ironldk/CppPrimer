@@ -19,7 +19,7 @@ private:
 
 HasPtr::HasPtr(const HasPtr &origin) {
 	i = origin.i;
-	string *ps = new string(*origin.ps);
+	ps = new string(*origin.ps);
 }
 
 HasPtr & HasPtr::operator=(const HasPtr &origin) {
