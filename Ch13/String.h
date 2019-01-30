@@ -1,8 +1,17 @@
 #pragma once
 #include <memory>
+#include <iostream>
+using std::ostream;
 using std::pair;
 using std::allocator;
 class String {
+	friend bool operator==(const String &, const String &);
+	friend bool operator!=(const String &, const String &);
+	friend bool operator<(const String &, const String &);
+	friend bool operator>(const String &, const String &);
+	friend bool operator<=(const String &, const String &);
+	friend bool operator>=(const String &, const String &);
+	friend ostream &operator<<(ostream &, const String &);
 public:
 	String():String(""){}
 	String(const char *);
@@ -10,6 +19,8 @@ public:
 	String(String &&)noexcept;
 	String &operator=(const String &);
 	String &operator=(String &&)noexcept;
+	char &operator[](size_t n){ return elements[n]; }
+	const char &operator[](size_t n) const{ return elements[n]; }
 	~String() { free(); }
 	const char* c_str() const { return elements; }
 	size_t size() const { return end - elements; }
@@ -23,3 +34,10 @@ private:
 	char *end;
 	allocator<char> alloc;
 };
+bool operator==(const String &, const String &);
+bool operator!=(const String &, const String &);
+bool operator<(const String &, const String &);
+bool operator>(const String &, const String &);
+bool operator<=(const String &, const String &);
+bool operator>=(const String &, const String &);
+ostream &operator<<(ostream &, const String &);

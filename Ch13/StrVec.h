@@ -6,6 +6,12 @@ using std::allocator;
 using std::pair;
 using std::initializer_list;
 class StrVec {
+	friend bool operator==(const StrVec &, const StrVec &);
+	friend bool operator!=(const StrVec &, const StrVec &);
+	friend bool operator<(const StrVec &, const StrVec &);
+	friend bool operator>(const StrVec &, const StrVec &);
+	friend bool operator<=(const StrVec &, const StrVec &);
+	friend bool operator>=(const StrVec &, const StrVec &);
 public:
 	StrVec():elements(nullptr), first_free(nullptr), cap(nullptr){}
 	StrVec(const StrVec&);
@@ -13,6 +19,9 @@ public:
 	StrVec(initializer_list<string>);
 	StrVec &operator=(const StrVec&);
 	StrVec &operator=(StrVec&&)noexcept;
+	StrVec &operator=(initializer_list<string>);
+	string &operator[](size_t n) { return elements[n]; }
+	const string &operator[](size_t n) const { return elements[n]; }
 	~StrVec();
 	void push_back(const string&);
 	size_t size() const { return first_free - elements; }
@@ -37,3 +46,9 @@ private:
 	string *first_free;
 	string *cap;
 };
+bool operator==(const StrVec &, const StrVec &);
+bool operator!=(const StrVec &, const StrVec &);
+bool operator<(const StrVec &, const StrVec &);
+bool operator>(const StrVec &, const StrVec &);
+bool operator<=(const StrVec &, const StrVec &);
+bool operator>=(const StrVec &, const StrVec &);

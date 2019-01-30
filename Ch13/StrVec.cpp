@@ -29,7 +29,7 @@ StrVec::StrVec(const StrVec &s) {
 }
 StrVec::StrVec(StrVec &&s)noexcept
 	:elements(s.elements),first_free(s.first_free),cap(s.cap){
-	s.elements = s.first_free = s.end = nullptr;
+	s.elements = s.first_free = s.cap = nullptr;
 }
 StrVec::StrVec(initializer_list<string> il) {
 	range_initialize(il.begin(), il.end());
@@ -51,6 +51,32 @@ StrVec &StrVec::operator=(StrVec &&rhs)noexcept{
 		rhs.elements = rhs.first_free = rhs.cap = nullptr;
 	}
 	return *this;
+}
+StrVec &StrVec::operator=(initializer_list<string> il) {
+	auto data = alloc_n_copy(il.begin(), il.end());
+	free();
+	elements = data.first;
+	first_free = cap = data.second;
+	return *this;
+}
+bool operator==(const StrVec &lhs, const StrVec &rhs) {
+	return lhs.size() == rhs.size() &&
+		std::equal(lhs.begin(), lhs.end(), rhs.begin());
+}
+bool operator!=(const StrVec &lhs, const StrVec &rhs) {
+	return !(lhs == rhs);
+}
+bool operator<(const StrVec &lhs, const StrVec &rhs) {
+	return std::lexicographical_compare(lhs.begin(), lhs.end(), rhs.begin(), rhs.end());
+}
+bool operator>(const StrVec &lhs, const StrVec &rhs) {
+	return rhs < lhs;
+}
+bool operator<=(const StrVec &lhs, const StrVec &rhs) {
+	return !(lhs > rhs);
+}
+bool operator>=(const StrVec &lhs, const StrVec &rhs) {
+	return !(lhs < rhs);
 }
 void StrVec::reallocate(){
 	auto newcapacity = size() ? 2 * size() : 1;

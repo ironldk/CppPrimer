@@ -55,3 +55,27 @@ void String::free() {
 		elements = end = nullptr;
 	}
 }
+ostream &operator<<(ostream &os, const String &str) {
+	auto c = str.c_str();
+	while (*c) os << *c++;
+	return os;
+}
+bool operator==(const String &lhs, const String &rhs) {
+	return lhs.size() == rhs.size() &&
+		std::equal(lhs.elements, lhs.end, rhs.elements);
+}
+bool operator!=(const String &lhs, const String &rhs) {
+	return !(lhs == rhs);
+}
+bool operator<(const String &lhs, const String &rhs) {
+	return std::lexicographical_compare(lhs.elements, lhs.end, rhs.elements, rhs.end);
+}
+bool operator>(const String &lhs, const String &rhs) {
+	return rhs < lhs;
+}
+bool operator<=(const String &lhs, const String &rhs) {
+	return !(lhs > rhs);
+}
+bool operator>=(const String &lhs, const String &rhs) {
+	return !(lhs < rhs);
+}
