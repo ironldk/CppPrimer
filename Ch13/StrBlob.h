@@ -16,8 +16,10 @@ using std::ifstream;
 using std::cout;
 using std::endl;
 using std::cin;
+class StrBlobPtr;
 class ConstStrBlobPtr;
 class StrBlob {
+	friend class StrBlobPtr;
 	friend class ConstStrBlobPtr;
 	friend bool operator==(const StrBlob &, const StrBlob &);
 	friend bool operator!=(const StrBlob &, const StrBlob &);
@@ -43,9 +45,11 @@ public:
 	void pop_back();
 	// element access
 	string& front();
-	const string& front() const;
 	string& back();
+	const string& front() const;
 	const string& back() const;
+	StrBlobPtr begin() const;
+	StrBlobPtr end() const;
 	ConstStrBlobPtr cbegin() const;
 	ConstStrBlobPtr cend() const;
 private:
@@ -59,7 +63,66 @@ bool operator<(const StrBlob &, const StrBlob &);
 bool operator>(const StrBlob &, const StrBlob &);
 bool operator<=(const StrBlob &, const StrBlob &);
 bool operator>=(const StrBlob &, const StrBlob &);
+
+
 // StrBlobPtr throws an exception on attempts to access a nonexistent element
+class StrBlobPtr {
+	friend bool operator==(const StrBlobPtr &, const StrBlobPtr &);
+	friend bool operator!=(const StrBlobPtr &, const StrBlobPtr &);
+	friend bool operator<(const StrBlobPtr &, const StrBlobPtr &);
+	friend bool operator>(const StrBlobPtr &, const StrBlobPtr &);
+	friend bool operator<=(const StrBlobPtr &, const StrBlobPtr &);
+	friend bool operator>=(const StrBlobPtr &, const StrBlobPtr &);
+public:
+	StrBlobPtr() : curr(0) { }
+	StrBlobPtr(const StrBlob &a, size_t sz = 0) :
+		wptr(a.data), curr(sz) { }
+	string& deref() const;
+	StrBlobPtr& incr(); // prefix version
+	string &operator[](size_t n) {
+		auto p = check(n, "out of range"); return p->at(n);
+	}
+	const string &operator[](size_t n) const {
+		auto p = check(n, "our of range"); return p->at(n);
+	}
+	StrBlobPtr &operator++();
+	StrBlobPtr &operator--();
+	StrBlobPtr operator++(int);
+	StrBlobPtr operator--(int);
+	StrBlobPtr &operator+=(size_t);
+	StrBlobPtr &operator-=(size_t);
+	StrBlobPtr &operator+(size_t)const;
+	StrBlobPtr &operator-(size_t)const;
+	string &operator*();
+	string *operator->();
+private:
+	// check returns a shared_ptr to the vector if the check succeeds
+	shared_ptr<vector<string>>
+		check(size_t, const string&) const;
+	// store a weak_ptr, which means the underlying vector might be destroyed
+	weak_ptr<vector<string>> wptr;
+	size_t curr; // current position within the array
+};
+bool operator==(const StrBlobPtr &lhs, const StrBlobPtr &rhs) {
+	return lhs.curr == rhs.curr;
+}
+bool operator!=(const StrBlobPtr &lhs, const StrBlobPtr &rhs) {
+	return lhs.curr != rhs.curr;
+}
+bool operator<(const StrBlobPtr &lhs, const StrBlobPtr &rhs) {
+	return lhs.curr < rhs.curr;
+}
+bool operator>(const StrBlobPtr &lhs, const StrBlobPtr &rhs) {
+	return lhs.curr > rhs.curr;
+}
+bool operator<=(const StrBlobPtr &lhs, const StrBlobPtr &rhs) {
+	return lhs.curr <= rhs.curr;
+}
+bool operator>=(const StrBlobPtr &lhs, const StrBlobPtr &rhs) {
+	return lhs.curr >= rhs.curr;
+}
+
+
 class ConstStrBlobPtr {
 	friend bool operator==(const ConstStrBlobPtr &, const ConstStrBlobPtr &);
 	friend bool operator!=(const ConstStrBlobPtr &, const ConstStrBlobPtr &);
@@ -85,6 +148,8 @@ public:
 	ConstStrBlobPtr &operator-=(size_t);
 	ConstStrBlobPtr &operator+(size_t)const;
 	ConstStrBlobPtr &operator-(size_t)const;
+	const string &operator*();
+	const string *operator->();
 private:
 	// check returns a shared_ptr to the vector if the check succeeds
 	shared_ptr<vector<string>>
@@ -93,9 +158,21 @@ private:
 	weak_ptr<vector<string>> wptr;
 	size_t curr; // current position within the array
 };
-bool operator==(const ConstStrBlobPtr &, const ConstStrBlobPtr &);
-bool operator!=(const ConstStrBlobPtr &, const ConstStrBlobPtr &);
-bool operator<(const ConstStrBlobPtr &, const ConstStrBlobPtr &);
-bool operator>(const ConstStrBlobPtr &, const ConstStrBlobPtr &);
-bool operator<=(const ConstStrBlobPtr &, const ConstStrBlobPtr &);
-bool operator>=(const ConstStrBlobPtr &, const ConstStrBlobPtr &);
+bool operator==(const ConstStrBlobPtr &lhs, const ConstStrBlobPtr &rhs) {
+	return lhs.curr == rhs.curr;
+}
+bool operator!=(const ConstStrBlobPtr &lhs, const ConstStrBlobPtr &rhs) {
+	return lhs.curr != rhs.curr;
+}
+bool operator<(const ConstStrBlobPtr &lhs, const ConstStrBlobPtr &rhs) {
+	return lhs.curr < rhs.curr;
+}
+bool operator>(const ConstStrBlobPtr &lhs, const ConstStrBlobPtr &rhs) {
+	return lhs.curr > rhs.curr;
+}
+bool operator<=(const ConstStrBlobPtr &lhs, const ConstStrBlobPtr &rhs) {
+	return lhs.curr <= rhs.curr;
+}
+bool operator>=(const ConstStrBlobPtr &lhs, const ConstStrBlobPtr &rhs) {
+	return lhs.curr >= rhs.curr;
+}

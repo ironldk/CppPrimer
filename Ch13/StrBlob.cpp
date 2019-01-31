@@ -64,7 +64,87 @@ bool operator<=(const StrBlob &lhs, const StrBlob &rhs) {
 bool operator>=(const StrBlob &lhs, const StrBlob &rhs) {
 	return !(lhs < rhs);
 }
-ConstStrBlobPtr StrBlob::cbegin() const { return ConstStrBlobPtr(*this); }
+
+
+StrBlobPtr StrBlob::begin() const {
+	return StrBlobPtr(*this);
+}
+StrBlobPtr StrBlob::end() const {
+	auto ret = StrBlobPtr(*this, data->size());
+	return ret;
+}
+shared_ptr<vector<string>>
+StrBlobPtr::check(size_t i, const string &msg) const {
+	auto ret = wptr.lock(); // is the vector still around?
+	if (!ret)
+		throw std::runtime_error("unbound StrBlobPtr");
+	if (i >= ret->size())
+		throw out_of_range(msg);
+	return ret; // otherwise, return a shared_ptr to the vector
+}
+string& StrBlobPtr::deref() const
+{
+	auto p = check(curr, "dereference past end");
+	return (*p)[curr]; // (*p) is the vector to which this object points
+}
+// prefix: return a reference to the incremented object
+StrBlobPtr& StrBlobPtr::incr()
+{
+	// if curr already points past the end of the container, can't increment it
+	check(curr, "increment past end of StrBlobPtr");
+	++curr; // advance the current state
+	return *this;
+}
+StrBlobPtr &StrBlobPtr::operator++() {
+	++curr;
+	check(curr, "increment past end of StrBlobPtr");
+	return *this;
+}
+StrBlobPtr &StrBlobPtr::operator--() {
+	--curr;
+	check(curr, "decrement past begin of ConstStrBlobPtr");
+	return *this;
+}
+StrBlobPtr StrBlobPtr::operator++(int) {
+	StrBlobPtr ret(*this);
+	++*this;
+	return ret;
+}
+StrBlobPtr StrBlobPtr::operator--(int) {
+	StrBlobPtr ret(*this);
+	--*this;
+	return ret;
+}
+StrBlobPtr &StrBlobPtr::operator+=(size_t n) {
+	curr += n;
+	check(curr, "increment past end of ConstStrBlobPtr");
+	return *this;
+}
+StrBlobPtr &StrBlobPtr::operator-=(size_t n) {
+	curr -= n;
+	check(curr, "decrement past begin of ConstStrBlobPtr");
+	return *this;
+}
+StrBlobPtr &StrBlobPtr::operator+(size_t n) const {
+	StrBlobPtr ret(*this);
+	return ret += n;
+}
+StrBlobPtr &StrBlobPtr::operator-(size_t n) const {
+	StrBlobPtr ret(*this);
+	return ret -= n;
+}
+string &StrBlobPtr::operator*() {
+	auto p = check(curr, "dereference past end");
+	return (*p)[curr];
+}
+string *StrBlobPtr::operator->() {
+	return &this->operator*();
+}
+
+
+ConstStrBlobPtr StrBlob::cbegin() const {
+	return ConstStrBlobPtr(*this);
+}
 ConstStrBlobPtr StrBlob::cend() const {
 	auto ret = ConstStrBlobPtr(*this, data->size());
 	return ret;
@@ -131,21 +211,10 @@ ConstStrBlobPtr &ConstStrBlobPtr::operator-(size_t n) const{
 	ConstStrBlobPtr ret(*this);
 	return ret -= n;
 }
-bool operator==(const ConstStrBlobPtr &lhs, const ConstStrBlobPtr &rhs) {
-	return /*lhs.wptr == rhs.wptr && */lhs.curr == rhs.curr;
+const string &ConstStrBlobPtr::operator*() {
+	auto p = check(curr, "dereference past end");
+	return (*p)[curr];
 }
-bool operator!=(const ConstStrBlobPtr &lhs, const ConstStrBlobPtr &rhs) {
-	return lhs.curr != rhs.curr;
-}
-bool operator<(const ConstStrBlobPtr &lhs, const ConstStrBlobPtr &rhs) {
-	return lhs.curr < rhs.curr;
-}
-bool operator>(const ConstStrBlobPtr &lhs, const ConstStrBlobPtr &rhs) {
-	return lhs.curr > rhs.curr;
-}
-bool operator<=(const ConstStrBlobPtr &lhs, const ConstStrBlobPtr &rhs) {
-	return lhs.curr <= rhs.curr;
-}
-bool operator>=(const ConstStrBlobPtr &lhs, const ConstStrBlobPtr &rhs) {
-	return lhs.curr >= rhs.curr;
+const string *ConstStrBlobPtr::operator->() {
+	return &this->operator*();
 }
