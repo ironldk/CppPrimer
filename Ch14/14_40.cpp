@@ -1,6 +1,5 @@
-//Exercise 10.25: In the exercises for ¡ì 10.3.2 (p. 392) you wrote a version
-//of biggies that uses partition.Rewrite that function to use
-//check_size and bind.
+//Exercise 14.40: Rewrite the biggies function from ¡ì 10.3.2 (p. 391) to
+//use function - object classes in place of lambdas
 //the quick red fox jumps over the slow red turtle
 #include "stdafx.h"
 #include <iostream>
@@ -20,16 +19,20 @@ using std::unique;
 using std::for_each;
 using std::bind;
 using std::placeholders::_1;
-
+class strcamp {
+	bool operator()(const string &a, const string &b) const {
+		return a.size() < b.size(); }
+};
+class printString {
+	void operator()(const string &s) const {
+		cout << s << " "; }
+};
 // return the plural version of word if ctr is greater than 1
 string make_plural(size_t ctr, const string &word,
-	const string &ending)
-{
+	const string &ending){
 	return (ctr > 1) ? word + ending : word;
 }
-
-void elimDups(vector<string> &words)
-{
+void elimDups(vector<string> &words){
 	// sort words alphabetically so we can find the duplicates
 	sort(words.begin(), words.end());
 	// unique reorders the input range so that each word appears once in the
@@ -38,29 +41,27 @@ void elimDups(vector<string> &words)
 	// erase uses a vector operation to remove the nonunique elements
 	words.erase(end_unique, words.end());
 }
-
-bool check_size(const string &s, string::size_type sz)
-{
-	return s.size() >= sz;
-}
-
-void biggies(vector<string> &words,
-	vector<string>::size_type sz)
-{
+class CheckSize {
+public:
+	CheckSize(vector<string>::size_type s) :sz(s) {}
+	bool operator()(const string &s) const {
+		return s.size() >= sz;
+	}
+private:
+	vector<string>::size_type sz;
+};
+void biggies(vector<string> &words,	vector<string>::size_type sz){
 	elimDups(words); // put words in alphabetical order and remove duplicates
 					 // sort words by size, but maintain alphabetical order for words of the same size
-	stable_sort(words.begin(), words.end(),
-		[](const string &a, const string &b)
-	{ return a.size() < b.size(); });
+	stable_sort(words.begin(), words.end(),	strcamp());
 	// get an iterator to the first element whose size() is >= sz
-	auto wc = find_if(words.begin(), words.end(), bind(check_size, _1, sz));
+	auto wc = find_if(words.begin(), words.end(), CheckSize(sz));
 	// compute the number of elements with size >= sz
 	auto count = words.end() - wc;
 	cout << count << " " << make_plural(count, "word", "s")
 		<< " of length " << sz << " or longer" << endl;
 	// print words of the given size or longer, each one followed by a space
-	for_each(wc, words.end(),
-		[](const string &s) {cout << s << " "; });
+	for_each(wc, words.end(), printString());
 	cout << endl;
 }
 
