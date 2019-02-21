@@ -12,11 +12,11 @@ using std::make_shared;
 template <typename> class BlobPtr;
 template <typename> class Blob; // needed for parameters in operator==
 template <typename T>
-bool operator==(const Blob<T>&, const Blob<T>&);
+bool operator==<T>(const Blob<T>&, const Blob<T>&);
 template <typename T> class Blob {
 	// each instantiation of Blob grants access to the version of
 	// BlobPtr and the equality operator instantiated with the same type
-	friend class BlobPtr<T>;
+	friend class BlobPetr<T>;
 	friend bool operator==<T>(const Blob<T>&, const Blob<T>&);
 public:
 	typedef T value_type;
@@ -65,4 +65,8 @@ template <typename T>
 void Blob<T>::check(size_type i, const string &msg) const {
 	if (i >= data->size())
 		throw std::out_of_range(msg);
+}
+template <typename T>
+bool operator==<T>(const Blob<T> &lhs, const Blob<T> &rhs) {
+
 }
