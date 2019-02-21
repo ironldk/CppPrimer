@@ -1,4 +1,4 @@
-#include "stdafx.h"
+//#include "stdafx.h"
 #include "7_41_Sales_data.h"
 
 // constructor

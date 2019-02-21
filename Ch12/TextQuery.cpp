@@ -1,4 +1,4 @@
-#include "stdafx.h"
+//#include "stdafx.h"
 #include "TextQuery.h"
 #include <sstream>
 #include <algorithm>
@@ -32,10 +32,10 @@ QueryResult TextQuery::query(const string &word) const {
 	else
 		return QueryResult(word, found->second, text);
 }
-const set<LineNum>::iterator QueryResult::begin() const {
+const set<TextQuery::LineNum>::iterator QueryResult::begin() const {
 	return lineNums->begin();
 }
-const set<LineNum>::iterator QueryResult::end() const{
+const set<TextQuery::LineNum>::iterator QueryResult::end() const{
 	return lineNums->end();
 }
 shared_ptr<vector<string>> QueryResult::get_file() const{
