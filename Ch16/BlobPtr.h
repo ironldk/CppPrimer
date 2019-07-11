@@ -2,8 +2,15 @@
 #include "Blob.h"
 using std::weak_ptr;
 using std::size_t;
+template <typename> class BlobPtr;
+template <typename T>
+bool operator==(const BlobPtr<T>&, const BlobPtr<T>&);
+template <typename T>
+bool operator<(const BlobPtr<T>&, const BlobPtr<T>&);
 // BlobPtr throws an exception on attempts to access a nonexistent element
 template <typename T> class BlobPtr {
+	friend bool operator==<T>(const BlobPtr<T>&, const BlobPtr<T>&);
+	friend bool operator< <T>(const BlobPtr<T>&, const BlobPtr<T>&);
 public:
 	BlobPtr() : curr(0) { }
 	BlobPtr(Blob<T> &a, size_t sz = 0) :
@@ -54,4 +61,16 @@ BlobPtr<T> BlobPtr<T>::operator--(int) {
 	BlobPtr ret = *this;
 	--*this;
 	return ret;
+}
+template <typename T>
+bool operator==(const BlobPtr<T> &lhs, const BlobPtr<T> &rhs) {
+	if (lhs.wptr.lock() != rhs.wptr.lock())
+		throw runtime_error("ptrs to different Blobs!");
+	return lhs.curr == rhs.curr;
+}
+template <typename T>
+bool operator< (const BlobPtr<T> &lhs, const BlobPtr<T> &rhs) {
+	if (lhs.wptr.lock() != rhs.wptr.lock())
+		throw runtime_error("ptrs to different Blobs!");
+	return lhs.curr < rhs.curr;
 }

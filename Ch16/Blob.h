@@ -24,6 +24,10 @@ public:
 	// constructors
 	Blob();
 	Blob(initializer_list<T> il);
+	template <typename T> // type parameter for the class
+	template <typename It> // type parameter for the constructor
+	Blob<T>::Blob(It b, It e) :
+		data(make_shared<vector<T>>(b, e)) { }
 	// number of elements in the Blob
 	size_type size() const { return data->size(); }
 	bool empty() const { return data->empty(); }
@@ -65,4 +69,8 @@ template <typename T>
 void Blob<T>::check(size_type i, const string &msg) const {
 	if (i >= data->size())
 		throw std::out_of_range(msg);
+}
+template <typename T>
+bool operator==(const Blob<T> &lhs, const Blob<T> &rhs) {
+	return *lhs.data == *rhs.data;
 }
