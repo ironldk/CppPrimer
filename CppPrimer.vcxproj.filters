@@ -1,0 +1,129 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="Header Files">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hh;hpp;hxx;hm;inl;inc;xsd</Extensions>
+    </Filter>
+    <Filter Include="Resource Files">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav</Extensions>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="ch16\16_54.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Sales_item.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="ch01\Sales_item.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="ch02\Sales_data.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="ch07\7_04_Person.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="ch07\7_23.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="ch07\7_31.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="ch07\7_41_Sales_data.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="ch07\7_53_Debug.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="ch07\Window_mgr_and_Screen.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="ch12\TextQuery.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="ch13\HasPtr.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="ch13\Message_Folder.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="ch13\StrBlob.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="ch13\String.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="ch13\StrVec.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="ch13\TextQueryStrVec.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="ch14\Sales_data.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="ch15\AndQuery.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="ch15\Basket.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="ch15\BinaryQuery.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="ch15\Bulk_quote.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="ch15\Disc_quote.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="ch15\Limit_quote.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="ch15\NotQuery.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="ch15\OrQuery.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="ch15\Query.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="ch15\Query_base.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="ch15\Quote.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="ch15\WordQuery.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="ch16\Blob.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="ch16\BlobPtr.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="ch16\DebugDelete.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="ch16\Shared_ptr.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="ch16\TextQuery.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="ch16\Unique_ptr.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+  </ItemGroup>
+</Project>
